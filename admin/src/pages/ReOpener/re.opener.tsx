@@ -1,4 +1,4 @@
-import { Autocomplete, Banner, BlockStack, Box, Button, Card, ChoiceList, Combobox, DropZone, Frame, Grid, InlineGrid, InlineStack, Layout, LegacyCard, Page, Select, Text, TextField, Thumbnail, Toast } from "@shopify/polaris"
+import { Autocomplete, Banner, BlockStack, Box, Button, Card, ChoiceList, Combobox, DropZone, Frame, Grid, Icon, InlineGrid, InlineStack, Layout, LegacyCard, Page, Select, Text, TextField, Thumbnail, Toast } from "@shopify/polaris"
 import { useCallback, useState } from "react";
 import '@/assets/css/switch.css';
 const options = [
@@ -9,6 +9,9 @@ const options = [
 
 ];
 import { list } from "@/common/ListLogo";
+import {
+    SelectIcon, XIcon
+} from '@shopify/polaris-icons';
 
 const ReOpener: React.FC = () => {
     const [open, setOpen] = useState<any>({
@@ -25,7 +28,7 @@ const ReOpener: React.FC = () => {
     const [dataText, setDataText] = useState<any>({
         name: 'Manage Cookie',
         colorText: '#FFFFFF',
-        colorBackGround: '#FFFFFF',
+        colorBackGround: '#fec944',
         horizontal: 10,
         vertical: 10,
         selectedP: '1',
@@ -51,7 +54,7 @@ const ReOpener: React.FC = () => {
     return (
         <Frame>
             <Page
-                // fullWidth
+
                 title=" Demo Re-Opener Polaris"
                 backAction={{ content: '', url: '/' }}
             >
@@ -102,11 +105,18 @@ const ReOpener: React.FC = () => {
                                                         Preview:
                                                     </Text>
                                                     <Box padding="400" background="bg-surface-hover">
-                                                        <Box padding="200" background="bg-fill-warning" borderRadius="200">
-                                                            <Text variant="bodyLg" as="p" alignment="center">
+                                                        <div >
+                                                            <text style={{
+                                                                borderRadius: '5px', display: "flex",
+                                                                alignContent: 'center', backgroundColor: dataText.colorBackGround,
+                                                                justifyContent: 'center', color: dataText.colorText,
+                                                                marginInline: parseInt(dataText.horizontal),
+                                                                marginBlock: '20px',
+                                                                padding: '10px'
+                                                            }}>
                                                                 {dataText.name}
-                                                            </Text>
-                                                        </Box>
+                                                            </text>
+                                                        </div>
                                                     </Box>
                                                 </InlineGrid>
                                             </Box>
@@ -130,22 +140,33 @@ const ReOpener: React.FC = () => {
                                                         <TextField
                                                             label="Re-open text color"
                                                             value={dataText.colorText}
+                                                            onChange={(value) => setDataText({ ...dataText, colorText: value })}
                                                             autoComplete="off"
                                                         />
-                                                        {/* <ColorPicker onChange={(color) => setDataText({ ...dataText, colorText: color })} color={dataText.colorText} />; */}
                                                         <TextField
                                                             label="Re-open background color"
                                                             value={dataText.colorBackGround}
                                                             onChange={(value) => setDataText({ ...dataText, colorBackGround: value })}
                                                             autoComplete="off"
+                                                            
                                                         />
                                                     </InlineGrid>
                                                     <InlineGrid columns={2} alignItems="center" gap="400">
-                                                        <Select
-                                                            label="Position"
+                                                        <Autocomplete
                                                             options={options}
-                                                            onChange={(value) => setDataText({ ...dataText, selectedP: value })}
-                                                            value={dataText.selectedP}
+                                                            selected={dataText.selectedP}
+                                                            onSelect={(selected) => setDataText({ ...dataText, selectedP: selected[0] })}
+                                                            textField={(<Autocomplete.TextField
+                                                                label="Position"
+                                                                value={selectedOption ? selectedOption.label : ''}
+                                                                autoComplete="off"
+                                                                suffix={
+                                                                    <Icon
+                                                                        source={SelectIcon}
+                                                                        tone="base"
+                                                                    />
+                                                                }
+                                                            />)}
                                                         />
                                                         <TextField
                                                             label="Horizontal margin"
@@ -170,20 +191,20 @@ const ReOpener: React.FC = () => {
                                                         <Button variant="plain" onClick={() => setOpen({ ...open, customize: !open.customize })}>Customize icon</Button>
                                                     </InlineStack>
                                                     <InlineGrid columns={3} alignItems="center" gap="400">
-                                                        <Select
-                                                            label="Position"
-                                                            options={options}
-                                                            onChange={(value) => setDataText({ ...dataText, selectedP: value })}
-                                                            value={dataText.selectedP}
-                                                        />
                                                         <Autocomplete
                                                             options={options}
                                                             selected={dataText.selectedP}
-                                                            onSelect={(selected) => setDataText({ ...dataText, selectedP: selected })}
+                                                            onSelect={(selected) => setDataText({ ...dataText, selectedP: selected[0] })}
                                                             textField={(<Autocomplete.TextField
                                                                 label="Position"
                                                                 value={selectedOption ? selectedOption.label : ''}
                                                                 autoComplete="off"
+                                                                suffix={
+                                                                    <Icon
+                                                                        source={SelectIcon}
+                                                                        tone="base"
+                                                                    />
+                                                                }
                                                             />)}
                                                         />
                                                         <TextField
@@ -216,52 +237,64 @@ const ReOpener: React.FC = () => {
                             }
                         </Card>
                         {open.customize ?
-                            <Banner
-                                hideIcon
-                                tone="warning"
-                                title="Pick logo from the gallery"
-                                onDismiss={() => { setOpen({ ...open, customize: !open.customize }) }}
-                            >
-                                <BlockStack gap="500">
-                                    <Grid columns={{ xs: 7, sm: 7, md: 10, lg: 12, xl: 14 }} >
-                                        {list.map((image, index) => (
-                                            <Grid.Cell key={index} >
-                                                <div onClick={() => setImage(image)}>
-                                                    <Thumbnail
-                                                        source={image.source}
-                                                        alt={image.alt}
-                                                        size="large"
-                                                    />
-                                                </div>
-                                            </Grid.Cell>
-                                        ))}
-                                    </Grid>
-                                    <DropZone onDrop={handleDrop} >
-                                        <Grid columns={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
-                                            <Grid.Cell columnSpan={{ xs: 5, sm: 5, md: 5, lg: 5, xl: 5 }}>
-                                                <Box padding="800">
-                                                    <Text variant="headingMd" as="h6" alignment="center">
-                                                        Upload file icon
-                                                    </Text>
-                                                    <Text variant="bodyLg" as="p" alignment="center">
-                                                        Format PNG or JPG /Maximum size 1MB
-                                                    </Text>
-                                                    <Text variant="bodyLg" as="p" alignment="center">
-                                                        Update may takke up to minute propagate to the live store.
-                                                    </Text>
-                                                </Box>
-                                            </Grid.Cell>
-                                            <Grid.Cell columnSpan={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1 }}   >
-                                                <div style={{ width: '100%', height: '100%', padding: '7px' }}>
-                                                    <img style={{ width: '100%', height: '100%', borderRadius: '5px' }}
-                                                        src={image.source}>
-                                                    </img>
-                                                </div>
-                                            </Grid.Cell>
-                                        </Grid>
-                                    </DropZone>
-                                </BlockStack>
-                            </Banner>
+                            <>
+                                <LegacyCard>
+                                    <Box background="bg-surface-active" padding="300">
+                                        <InlineGrid columns="1fr auto">
+                                            <Text variant="headingMd" as="h6">
+                                                Pick logo from the gallery
+                                            </Text>
+                                            <div onClick={() => setOpen({ ...open, customize: !open.customize })} style={{width:'50px',cursor: 'pointer'}}>
+                                                <Icon source={XIcon} />
+                                            </div>
+                                        </InlineGrid>
+                                    </Box>
+                                    <Box padding="600">
+                                        <BlockStack gap="500">
+                                            <Grid columns={{ xs: 7, sm: 7, md: 10, lg: 12, xl: 14 }} >
+                                                {list.map((image, index) => (
+                                                    <Grid.Cell key={index} >
+                                                        <div onClick={() => setImage(image)} style={{cursor: 'pointer'}}>
+                                                            <Thumbnail
+                                                                source={image.source}
+                                                                alt={image.alt}
+                                                                size="large"
+                                                            />
+                                                        </div>
+                                                    </Grid.Cell>
+                                                ))}
+                                            </Grid>
+                                            <DropZone onDrop={handleDrop} >
+                                                <Grid columns={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
+                                                    <Grid.Cell columnSpan={{ xs: 5, sm: 5, md: 5, lg: 5, xl: 5 }}>
+                                                        <Box padding="800">
+                                                            <Text variant="headingMd" as="h6" alignment="center">
+                                                                Upload file icon
+                                                            </Text>
+                                                            <Text variant="bodyLg" as="p" alignment="center">
+                                                                Format PNG or JPG /Maximum size 1MB
+                                                            </Text>
+                                                            <Text variant="bodyLg" as="p" alignment="center">
+                                                                Update may takke up to minute propagate to the live store.
+                                                            </Text>
+                                                        </Box>
+                                                    </Grid.Cell>
+                                                    <Grid.Cell columnSpan={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1 }}   >
+                                                        <div style={{ width: '100%', height: '100%', padding: '7px' }}>
+                                                            <img style={{ width: '100%', height: '100%', borderRadius: '5px' }}
+                                                                src={image.source}>
+                                                            </img>
+                                                        </div>
+                                                    </Grid.Cell>
+                                                </Grid>
+                                            </DropZone>
+                                        </BlockStack>
+                                    </Box>
+                                </LegacyCard>
+                                <LegacyCard>
+
+                                </LegacyCard>
+                            </>
                             :
                             <>
                             </>
