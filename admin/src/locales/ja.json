@@ -1,0 +1,15 @@
+{ 
+  "hello":{
+    "welcome":"こんにちは"
+  },
+  "HomePage": {
+    "Dashboards":{
+      "custom":"カスタム",
+        "day": "日",
+        "week": "週",
+        "month": "月",
+        "year": "年"
+    },
+    "title": "ダッシュボード"
+  }
+}

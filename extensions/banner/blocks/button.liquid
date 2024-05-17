@@ -1,0 +1,73 @@
+{% liquid
+  if shop.metafields.customButtom != blank
+    for field in shop.metafields.customButtom
+      assign key = field | first
+      assign value = field | last
+      if key contains 'title'
+        assign title = value
+      elsif key contains 'customS'
+        assign customS = value
+      elsif key contains 'customI'
+        assign customI = value
+      elsif key contains 'checkLength'
+        assign checkLength = value
+      elsif key contains 'length'
+        assign length = value
+      elsif key contains 'fieldSize'
+        assign fieldSize = value
+      endif
+    endfor
+  endif
+%}
+
+{% assign text = '' %}
+{% assign remainingChars = length %}
+<div>
+  <strong {{ customS }}>{{ title }}</strong>
+  {% if fieldSize == '0' %}
+    <input
+      {{ customI }}
+      id="myInput"
+      value="{{ text }}"
+      onchange="handleChange(this.value)"
+      maxlength="{% if checkLength == 't' %}{{ length }}{% endif %}"
+    >
+  {% else %}
+    <textarea
+      {{ customI }}
+      id="myInput"
+      onchange="handleChange(this.value)"
+      maxlength="{% if checkLength == 't'%}{{ length }}{% endif %}"
+    >{{ text }}</textarea>
+  {% endif %}
+  {% if checkLength == 't' %}
+    <span id="remainingChars" style="display: flex; align-items: center; justify-content: flex-end;">
+      {{- remainingChars }} / {{ length -}}
+    </span>
+  {% endif %}
+</div>
+<script>
+  var remainingChars = {{ length }};
+  var maxLength = {{ length }};
+  function handleChange(val) {
+    var inputText = val.length;
+    text = val;
+    remainingChars = maxLength - inputText;
+    updateRemainingChars();
+  }
+  function updateRemainingChars() {
+    var remainingCharsElement = document.getElementById('remainingChars');
+    if (remainingCharsElement) {
+      remainingCharsElement.textContent = remainingChars + ' / ' + maxLength;
+    }
+  }
+  document.getElementById("myInput").addEventListener("input", function() {
+    handleChange(this.value);
+  });
+</script>
+{% schema %}
+{
+  "name": "button",
+  "target": "section"
+}
+{% endschema %}

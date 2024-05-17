@@ -1,0 +1,27 @@
+.animatedV-icon {
+    animation: pulseV 2s ease-in-out forwards; /* Điều chỉnh thời gian và kiểu hoạt hình tùy thích */
+}
+.animatedX-icon {
+    animation: pulseX 2s ease-in-out forwards; /* Điều chỉnh thời gian và kiểu hoạt hình tùy thích */
+}
+
+@keyframes pulseV {
+    from {
+        transform: scale(1);
+        color: inherit; /* Giữ màu icon ban đầu */
+    }
+    to {
+        transform: scale(1.1); /* Tăng kích thước icon */
+        color: #008000; /* Màu xanh */
+    }
+}
+@keyframes pulseX {
+    from {
+        transform: scale(1);
+        color: inherit; /* Giữ màu icon ban đầu */
+    }
+    to {
+        transform: scale(1.1); /* Tăng kích thước icon */
+        color: #e21a1a; /* Màu đỏ */
+    }
+}
