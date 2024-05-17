@@ -1,17 +1,18 @@
-import { Autocomplete, Banner, BlockStack, Box, Button, Card, ChoiceList, Combobox, DropZone, Frame, Grid, Icon, InlineGrid, InlineStack, Layout, LegacyCard, Page, Select, Text, TextField, Thumbnail, Toast } from "@shopify/polaris"
+import { Autocomplete, Banner, BlockStack, Box, Button, Card, ChoiceList, ColorPicker, Combobox, DropZone, Frame, Grid, Icon, InlineGrid, InlineStack, Layout, LegacyCard, Modal, Page, Select, Text, TextField, Thumbnail, Toast } from "@shopify/polaris"
 import { useCallback, useState } from "react";
 import '@/assets/css/switch.css';
+import { list } from "@/common/ListLogo";
+import {
+    SelectIcon, XIcon
+} from '@shopify/polaris-icons';
+import { changeHexColor } from "@/common/ChangeColorHex";
+
 const options = [
     { label: 'Bottom - Left', value: '1' },
     { label: 'Bottom - Right', value: '2' },
     { label: 'Top - Left', value: '3' },
     { label: 'Top - Right', value: '4' },
-
 ];
-import { list } from "@/common/ListLogo";
-import {
-    SelectIcon, XIcon
-} from '@shopify/polaris-icons';
 
 const ReOpener: React.FC = () => {
     const [open, setOpen] = useState<any>({
@@ -24,7 +25,7 @@ const ReOpener: React.FC = () => {
         alt: list[0].alt,
     });
     const [active, setActive] = useState<any>(false);
-
+    const [showModal, setShowModal] = useState<any>({ model: false, type: 0 });
     const [dataText, setDataText] = useState<any>({
         name: 'Manage Cookie',
         colorText: '#FFFFFF',
@@ -34,6 +35,13 @@ const ReOpener: React.FC = () => {
         selectedP: '1',
 
     });
+    const [color, setColor] = useState({
+        hue: 300,
+        brightness: 1,
+        saturation: 0.7,
+        alpha: 0.7,
+    });
+    const [hex, setHex] = useState<any>();
     const handleDrop = (files: File[]) => {
         const acceptedFiles = files.filter(file => ['image/png', 'image/jpeg'].includes(file.type) && file.size <= 1024 * 1024);
         if (acceptedFiles.length > 0) {
@@ -46,6 +54,11 @@ const ReOpener: React.FC = () => {
             setActive(true);
         }
     };
+
+    const handleColor = (value: any) => {
+        setColor(value);
+        setHex(changeHexColor(color));
+    }
     const selectedOption = dataText.selectedP ? options.find(option => option.value === dataText.selectedP) : null;
 
     const toastMarkup = active ? (
@@ -54,7 +67,6 @@ const ReOpener: React.FC = () => {
     return (
         <Frame>
             <Page
-
                 title=" Demo Re-Opener Polaris"
                 backAction={{ content: '', url: '/' }}
             >
@@ -124,7 +136,6 @@ const ReOpener: React.FC = () => {
                                             <></>
                                         }
                                     </InlineGrid>
-
                                     <Box padding="300">
                                         <BlockStack gap="400">
                                             {selected[0] === "text" ?
@@ -137,19 +148,23 @@ const ReOpener: React.FC = () => {
                                                             onChange={(value) => setDataText({ ...dataText, name: value })}
                                                             autoComplete="off"
                                                         />
-                                                        <TextField
-                                                            label="Re-open text color"
-                                                            value={dataText.colorText}
-                                                            onChange={(value) => setDataText({ ...dataText, colorText: value })}
-                                                            autoComplete="off"
-                                                        />
-                                                        <TextField
-                                                            label="Re-open background color"
-                                                            value={dataText.colorBackGround}
-                                                            onChange={(value) => setDataText({ ...dataText, colorBackGround: value })}
-                                                            autoComplete="off"
-                                                            
-                                                        />
+                                                        <div onClick={() => setShowModal({ model: true, type: 1 })} style={{ cursor: 'pointer' }}>
+                                                            <TextField
+                                                                label="Re-open text color"
+                                                                value={dataText.colorText}
+                                                                onChange={(value) => setDataText({ ...dataText, colorText: value })}
+                                                                autoComplete="off"
+                                                            />
+                                                        </div>
+                                                        <div onClick={() => setShowModal({ model: true, type: 2 })} style={{ cursor: 'pointer' }}>
+                                                            <TextField
+                                                                label="Re-open background color"
+                                                                value={dataText.colorBackGround}
+                                                                onChange={(value) => setDataText({ ...dataText, colorBackGround: value })}
+                                                                autoComplete="off"
+
+                                                            />
+                                                        </div>
                                                     </InlineGrid>
                                                     <InlineGrid columns={2} alignItems="center" gap="400">
                                                         <Autocomplete
@@ -244,7 +259,7 @@ const ReOpener: React.FC = () => {
                                             <Text variant="headingMd" as="h6">
                                                 Pick logo from the gallery
                                             </Text>
-                                            <div onClick={() => setOpen({ ...open, customize: !open.customize })} style={{width:'50px',cursor: 'pointer'}}>
+                                            <div onClick={() => setOpen({ ...open, customize: !open.customize })} style={{ width: '50px', cursor: 'pointer' }}>
                                                 <Icon source={XIcon} />
                                             </div>
                                         </InlineGrid>
@@ -254,7 +269,7 @@ const ReOpener: React.FC = () => {
                                             <Grid columns={{ xs: 7, sm: 7, md: 10, lg: 12, xl: 14 }} >
                                                 {list.map((image, index) => (
                                                     <Grid.Cell key={index} >
-                                                        <div onClick={() => setImage(image)} style={{cursor: 'pointer'}}>
+                                                        <div onClick={() => setImage(image)} style={{ cursor: 'pointer' }}>
                                                             <Thumbnail
                                                                 source={image.source}
                                                                 alt={image.alt}
@@ -292,7 +307,6 @@ const ReOpener: React.FC = () => {
                                     </Box>
                                 </LegacyCard>
                                 <LegacyCard>
-
                                 </LegacyCard>
                             </>
                             :
@@ -301,6 +315,46 @@ const ReOpener: React.FC = () => {
                         }
                     </BlockStack>
                 </Layout>
+                {showModal.model && (
+                    <Modal
+                        open={showModal}
+                        onClose={() => setShowModal(false)}
+                        title={`Choice Color ${showModal.type === 1 ? 'text' : 'background'}`}
+                        primaryAction={{
+                            content: 'Save',
+
+                            onAction: () => {
+                                if (hex !== null) {
+                                    if (showModal.type === 1) {
+                                        setDataText({ ...dataText, colorText: hex })
+                                    } else {
+                                        setDataText({ ...dataText, colorBackGround: hex })
+                                    }
+                                }
+                                setShowModal({ model: false, type: 0 })
+                            },
+                        }}
+                        secondaryActions={[
+                            {
+                                content: 'Cancel',
+                                onAction: () => setShowModal({ model: false, type: 0 }),
+                            },
+                        ]}
+                    >
+                        <Modal.Section>
+                            <InlineGrid columns="1fr auto">
+                                <ColorPicker onChange={(value) => handleColor(value)} color={color} allowAlpha />
+                                <Box>
+                                    <TextField
+                                        label="Color (Hex) "
+                                        value={hex ? hex : ''}
+                                        autoComplete="off"
+                                    />
+                                </Box>
+                            </InlineGrid>
+                        </Modal.Section>
+                    </Modal>
+                )}
             </Page >
         </Frame >
     )
