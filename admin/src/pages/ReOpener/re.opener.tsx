@@ -14,10 +14,10 @@ const options = [
     { label: 'Top - Right', value: '4' },
 ];
 const postion = [
-    { top: '90%', left: '50%', value: '1' },
-    { top: '90%', left: '90%', value: '2' },
-    { top: '50%', left: '50%', value: '3' },
-    { top: '50%', left: '90%', value: '4' },
+    { top: '90%', left: '65%', value: '1' },
+    { top: '90%', left: '85%', value: '2' },
+    { top: '50%', left: '65%', value: '3' },
+    { top: '50%', left: '85%', value: '4' },
 ];
 
 const ReOpener: React.FC = () => {
@@ -118,13 +118,17 @@ const ReOpener: React.FC = () => {
                                             }
                                         />
                                         {selected[0] === "text" ?
-                                            <Box>
-                                                <InlineGrid columns={2} alignItems="center">
-                                                    <Text variant="headingMd" as="h6">
+                                            <Grid columns={{ xs: 3, sm: 3, md: 4, lg: 4, xl: 4 }}  >
+                                                <Grid.Cell columnSpan={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1 }}>
+                                                    <div style={{marginTop:'21px'}}>
+                                                    <Text variant="headingMd" as="h6" >
                                                         Preview:
-                                                    </Text>
+                                                    </Text> 
+                                                    </div>
+                                                </Grid.Cell>
+                                                <Grid.Cell columnSpan={{ xs: 2, sm: 2, md: 3, lg: 3, xl: 3 }}>
                                                     <Box>
-                                                        <div style={{ position: 'relative', backgroundColor: '#F1F1F1', width: '220px', height: '70px' }}>
+                                                        <div style={{ position: 'relative', backgroundColor: '#F1F1F1', width: '170px', height: '70px', }}>
                                                             <text style={{
                                                                 position: 'absolute',
                                                                 top: selectedPostion?.top,
@@ -136,16 +140,16 @@ const ReOpener: React.FC = () => {
                                                                 backgroundColor: dataText.colorBackGround,
                                                                 justifyContent: 'center',
                                                                 color: dataText.colorText,
-                                                                marginInline:dataText.horizontal+'px',
+                                                                marginInline: dataText.horizontal + 'px',
                                                                 padding: '5px',
-                                                                width:'120px'
+                                                                width: '120px'
                                                             }}>
                                                                 {dataText.name}
                                                             </text>
                                                         </div>
                                                     </Box>
-                                                </InlineGrid>
-                                            </Box>
+                                                </Grid.Cell>
+                                            </Grid>
                                             :
                                             <></>
                                         }
