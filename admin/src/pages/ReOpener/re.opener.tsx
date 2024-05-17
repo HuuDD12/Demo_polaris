@@ -120,10 +120,10 @@ const ReOpener: React.FC = () => {
                                         {selected[0] === "text" ?
                                             <Grid columns={{ xs: 3, sm: 3, md: 4, lg: 4, xl: 4 }}  >
                                                 <Grid.Cell columnSpan={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1 }}>
-                                                    <div style={{marginTop:'21px'}}>
-                                                    <Text variant="headingMd" as="h6" >
-                                                        Preview:
-                                                    </Text> 
+                                                    <div style={{ marginTop: '21px' }}>
+                                                        <Text variant="headingMd" as="h6" >
+                                                            Preview:
+                                                        </Text>
                                                     </div>
                                                 </Grid.Cell>
                                                 <Grid.Cell columnSpan={{ xs: 2, sm: 2, md: 3, lg: 3, xl: 3 }}>
@@ -268,68 +268,6 @@ const ReOpener: React.FC = () => {
                                 </>
                             }
                         </Card>
-                        {open.customize ?
-                            <>
-                                <LegacyCard>
-                                    <Box background="bg-surface-active" padding="300">
-                                        <InlineGrid columns="1fr auto">
-                                            <Text variant="headingMd" as="h6">
-                                                Pick logo from the gallery
-                                            </Text>
-                                            <div onClick={() => setOpen({ ...open, customize: !open.customize })} style={{ width: '50px', cursor: 'pointer' }}>
-                                                <Icon source={XIcon} />
-                                            </div>
-                                        </InlineGrid>
-                                    </Box>
-                                    <Box padding="600">
-                                        <BlockStack gap="500">
-                                            <Grid columns={{ xs: 7, sm: 7, md: 10, lg: 12, xl: 14 }} >
-                                                {list.map((image, index) => (
-                                                    <Grid.Cell key={index} >
-                                                        <div onClick={() => setImage(image)} style={{ cursor: 'pointer' }}>
-                                                            <Thumbnail
-                                                                source={image.source}
-                                                                alt={image.alt}
-                                                                size="large"
-                                                            />
-                                                        </div>
-                                                    </Grid.Cell>
-                                                ))}
-                                            </Grid>
-                                            <DropZone onDrop={handleDrop} >
-                                                <Grid columns={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
-                                                    <Grid.Cell columnSpan={{ xs: 5, sm: 5, md: 5, lg: 5, xl: 5 }}>
-                                                        <Box padding="800">
-                                                            <Text variant="headingMd" as="h6" alignment="center">
-                                                                Upload file icon
-                                                            </Text>
-                                                            <Text variant="bodyLg" as="p" alignment="center">
-                                                                Format PNG or JPG /Maximum size 1MB
-                                                            </Text>
-                                                            <Text variant="bodyLg" as="p" alignment="center">
-                                                                Update may takke up to minute propagate to the live store.
-                                                            </Text>
-                                                        </Box>
-                                                    </Grid.Cell>
-                                                    <Grid.Cell columnSpan={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1 }}   >
-                                                        <div style={{ width: '100%', height: '100%', padding: '7px' }}>
-                                                            <img style={{ width: '100%', height: '100%', borderRadius: '5px' }}
-                                                                src={image.source}>
-                                                            </img>
-                                                        </div>
-                                                    </Grid.Cell>
-                                                </Grid>
-                                            </DropZone>
-                                        </BlockStack>
-                                    </Box>
-                                </LegacyCard>
-                                <LegacyCard>
-                                </LegacyCard>
-                            </>
-                            :
-                            <>
-                            </>
-                        }
                     </BlockStack>
                 </Layout>
                 {showModal.model && (
@@ -369,6 +307,57 @@ const ReOpener: React.FC = () => {
                                     />
                                 </Box>
                             </InlineGrid>
+                        </Modal.Section>
+                    </Modal>
+                )}
+                {open.customize && (
+                    <Modal
+                        open={showModal}
+                        onClose={() => setOpen({ ...open, customize: false })}
+                        title={`Pick logo from the gallery`}
+                    >
+                        <Modal.Section>
+                            <Box padding="100">
+                                <BlockStack gap="300">
+                                    <Grid columns={{ xs: 10, sm: 10, md: 10, lg: 10, xl: 10 }} >
+                                        {list.map((image, index) => (
+                                            <Grid.Cell key={index} >
+                                                <div onClick={() => setImage(image)} style={{ cursor: 'pointer' }}>
+                                                    <Thumbnail
+                                                        source={image.source}
+                                                        alt={image.alt}
+                                                        size="large"
+                                                    />
+                                                </div>
+                                            </Grid.Cell>
+                                        ))}
+                                    </Grid>
+                                    <DropZone onDrop={handleDrop} >
+                                        <Grid columns={{ xs: 5, sm: 5, md: 5, lg: 5, xl: 5 }}>
+                                            <Grid.Cell columnSpan={{ xs: 4, sm: 4, md: 4, lg: 4, xl: 4 }}>
+                                                <Box padding="800">
+                                                    <Text variant="headingMd" as="h6" alignment="center">
+                                                        Upload file icon
+                                                    </Text>
+                                                    <Text variant="bodyMd" as="p" alignment="center">
+                                                        Format PNG or JPG /Maximum size 1MB
+                                                    </Text>
+                                                    <Text variant="bodyMd" as="p" alignment="center">
+                                                        Update may takke up to minute propagate to the live store.
+                                                    </Text>
+                                                </Box>
+                                            </Grid.Cell>
+                                            <Grid.Cell columnSpan={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1 }}   >
+                                                <div style={{ width: '100%', height: '100%', padding: '7px' }}>
+                                                    <img style={{ width: '100%', height: '100%', borderRadius: '5px' }}
+                                                        src={image.source}>
+                                                    </img>
+                                                </div>
+                                            </Grid.Cell>
+                                        </Grid>
+                                    </DropZone>
+                                </BlockStack>
+                            </Box>
                         </Modal.Section>
                     </Modal>
                 )}

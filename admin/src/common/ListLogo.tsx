@@ -70,4 +70,28 @@ export const list = [
         source: Image14,
         alt: 'Image 14',
     },
+    {
+        source: Image5,
+        alt: 'Image 15',
+    },
+    {
+        source: Image6,
+        alt: 'Image 16',
+    },
+    {
+        source: Image7,
+        alt: 'Image 17',
+    },
+    {
+        source: Image8,
+        alt: 'Image 18',
+    },
+    {
+        source: Image9,
+        alt: 'Image 19',
+    },
+    {
+        source: Image10,
+        alt: 'Image 20',
+    },
 ]
