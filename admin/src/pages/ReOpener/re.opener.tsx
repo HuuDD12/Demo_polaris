@@ -13,6 +13,12 @@ const options = [
     { label: 'Top - Left', value: '3' },
     { label: 'Top - Right', value: '4' },
 ];
+const postion = [
+    { top: '90%', left: '50%', value: '1' },
+    { top: '90%', left: '90%', value: '2' },
+    { top: '50%', left: '50%', value: '3' },
+    { top: '50%', left: '90%', value: '4' },
+];
 
 const ReOpener: React.FC = () => {
     const [open, setOpen] = useState<any>({
@@ -60,6 +66,7 @@ const ReOpener: React.FC = () => {
         setHex(changeHexColor(color));
     }
     const selectedOption = dataText.selectedP ? options.find(option => option.value === dataText.selectedP) : null;
+    const selectedPostion = dataText.selectedP ? postion.find(option => option.value === dataText.selectedP) : null;
 
     const toastMarkup = active ? (
         <Toast content="Please upload a PNG or JPEG file smaller than 1MB." onDismiss={() => setActive(!active)} />
@@ -116,15 +123,22 @@ const ReOpener: React.FC = () => {
                                                     <Text variant="headingMd" as="h6">
                                                         Preview:
                                                     </Text>
-                                                    <Box padding="400" background="bg-surface-hover">
-                                                        <div >
+                                                    <Box>
+                                                        <div style={{ position: 'relative', backgroundColor: '#F1F1F1', width: '220px', height: '70px' }}>
                                                             <text style={{
-                                                                borderRadius: '5px', display: "flex",
-                                                                alignContent: 'center', backgroundColor: dataText.colorBackGround,
-                                                                justifyContent: 'center', color: dataText.colorText,
-                                                                marginInline: parseInt(dataText.horizontal),
-                                                                marginBlock: '20px',
-                                                                padding: '10px'
+                                                                position: 'absolute',
+                                                                top: selectedPostion?.top,
+                                                                left: selectedPostion?.left,
+                                                                transform: 'translate(-95%, -95%)',
+                                                                borderRadius: '5px',
+                                                                display: 'flex',
+                                                                alignItems: 'center',
+                                                                backgroundColor: dataText.colorBackGround,
+                                                                justifyContent: 'center',
+                                                                color: dataText.colorText,
+                                                                marginInline:dataText.horizontal+'px',
+                                                                padding: '5px',
+                                                                width:'120px'
                                                             }}>
                                                                 {dataText.name}
                                                             </text>
@@ -144,7 +158,6 @@ const ReOpener: React.FC = () => {
                                                         <TextField
                                                             label="Re-open button text"
                                                             value={dataText.name}
-                                                            clearButton
                                                             onChange={(value) => setDataText({ ...dataText, name: value })}
                                                             autoComplete="off"
                                                         />
@@ -343,7 +356,7 @@ const ReOpener: React.FC = () => {
                     >
                         <Modal.Section>
                             <InlineGrid columns="1fr auto">
-                                <ColorPicker onChange={(value) => handleColor(value)} color={color} allowAlpha />
+                                <ColorPicker onChange={(value) => handleColor(value)} color={color} />
                                 <Box>
                                     <TextField
                                         label="Color (Hex) "
