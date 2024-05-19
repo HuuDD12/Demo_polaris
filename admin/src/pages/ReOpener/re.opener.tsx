@@ -103,7 +103,7 @@ const ReOpener: React.FC = () => {
                                     <Text as="p" fontWeight="medium">
                                         Display re-open button as:
                                     </Text>
-                                    <InlineGrid columns={2} alignItems="center">
+                                    <InlineGrid columns="1fr auto">
                                         <ChoiceList
                                             title=""
                                             choices={[
@@ -117,36 +117,31 @@ const ReOpener: React.FC = () => {
                                             }
                                             }
                                         />
-                                        {selected[0] === "text" ?
-                                            <Grid columns={{ xs: 3, sm: 3, md: 4, lg: 4, xl: 4 }}  >
-                                                <Grid.Cell columnSpan={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1 }}>
-                                                    <div style={{ height: '80px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                                        <Text variant="headingMd" as="h6" >
-                                                            Preview:
-                                                        </Text>
-                                                    </div>
-                                                </Grid.Cell>
-                                                <Grid.Cell columnSpan={{ xs: 2, sm: 2, md: 3, lg: 3, xl: 3 }}>
-                                                    <div style={{ backgroundColor: '#F1F1F1', padding: '5px', display: 'flex', justifyContent: selectedPostion?.top, alignItems: selectedPostion?.left, height: '80px' }}>
-                                                        <text style={{
-                                                            padding:'6px',
-                                                            borderRadius: '4px',
-                                                            display: 'flex',
-                                                            alignItems: 'center',
-                                                            backgroundColor: dataText.colorBackGround,
-                                                            justifyContent: 'center',
-                                                            color: dataText.colorText,
-                                                            marginInline: dataText.horizontal + 'px',
-                                                            width: 'auto',
-                                                        }}>
-                                                            {dataText.name}
-                                                        </text>
-                                                    </div>
-                                                </Grid.Cell>
-                                            </Grid>
-                                            :
-                                            <></>
-                                        }
+                                        {selected[0] === "text" && <Grid columns={{ xs: 4, sm: 4, md: 4, lg: 4, xl: 4 }}  >
+                                            <Grid.Cell columnSpan={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1 }}>
+                                                <div style={{ height: '60px', display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
+                                                    <Text variant="headingMd" as="h6" >
+                                                        Preview:
+                                                    </Text>
+                                                </div>
+                                            </Grid.Cell>
+                                            <Grid.Cell columnSpan={{ xs: 3, sm: 3, md: 3, lg: 3, xl: 3 }}>
+                                                <div style={{ backgroundColor: '#F1F1F1', padding: '5px', display: 'flex', justifyContent: selectedPostion?.top, alignItems: selectedPostion?.left, height: '60px' }}>
+                                                    <text style={{
+                                                        padding: '6px',
+                                                        borderRadius: '4px',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        backgroundColor: dataText.colorBackGround,
+                                                        justifyContent: 'center',
+                                                        color: dataText.colorText,
+                                                        marginInline: dataText.horizontal + 'px',
+                                                    }}>
+                                                        {dataText.name}
+                                                    </text>
+                                                </div>
+                                            </Grid.Cell>
+                                        </Grid>}
                                     </InlineGrid>
                                     <Box padding="300">
                                         <BlockStack gap="400">
@@ -271,7 +266,6 @@ const ReOpener: React.FC = () => {
                         title={`Choice Color ${showModal.type === 1 ? 'text' : 'background'}`}
                         primaryAction={{
                             content: 'Save',
-
                             onAction: () => {
                                 if (hex !== null) {
                                     if (showModal.type === 1) {
