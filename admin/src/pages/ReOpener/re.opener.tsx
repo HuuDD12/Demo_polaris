@@ -130,7 +130,7 @@ const ReOpener: React.FC = () => {
                                                     <div style={{ backgroundColor: '#F1F1F1', padding: '5px', display: 'flex', justifyContent: selectedPostion?.top, alignItems: selectedPostion?.left, height: '80px' }}>
                                                         <text style={{
                                                             padding:'6px',
-                                                            borderRadius: '3px',
+                                                            borderRadius: '4px',
                                                             display: 'flex',
                                                             alignItems: 'center',
                                                             backgroundColor: dataText.colorBackGround,
