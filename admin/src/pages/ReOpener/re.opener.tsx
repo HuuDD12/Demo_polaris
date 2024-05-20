@@ -1,10 +1,8 @@
-import { Autocomplete, Banner, BlockStack, Box, Button, Card, ChoiceList, ColorPicker, Combobox, DropZone, Frame, Grid, Icon, InlineGrid, InlineStack, Layout, LegacyCard, Modal, Page, Select, Text, TextField, Thumbnail, Toast } from "@shopify/polaris"
-import { useCallback, useState } from "react";
+import { Autocomplete, BlockStack, Box, Button, Card, ChoiceList, ColorPicker, Combobox, DropZone, Frame, Grid, Icon, InlineGrid, InlineStack, Layout, LegacyCard, Modal, Page, Select, Text, TextField, Thumbnail, Toast } from "@shopify/polaris"
+import React,{ useCallback, useState } from "react";
 import '@/assets/css/switch.css';
 import { list } from "@/common/ListLogo";
-import {
-    SelectIcon, XIcon
-} from '@shopify/polaris-icons';
+import {SelectIcon, XIcon } from '@shopify/polaris-icons';
 import { changeHexColor } from "@/common/ChangeColorHex";
 
 const options = [
@@ -21,15 +19,9 @@ const postion = [
 ];
 
 const ReOpener: React.FC = () => {
-    const [open, setOpen] = useState<any>({
-        switch: false,
-        customize: false,
-    });
+    const [open, setOpen] = useState<any>({switch: false,customize: false,});
     const [selected, setSelected] = useState<any>(['text']);
-    const [image, setImage] = useState<{ source: any, alt: any }>({
-        source: list[0].source,
-        alt: list[0].alt,
-    });
+    const [image, setImage] = useState<{ source: any, alt: any }>({source: list[0].source,alt: list[0].alt,});
     const [active, setActive] = useState<any>(false);
     const [showModal, setShowModal] = useState<any>({ model: false, type: 0 });
     const [dataText, setDataText] = useState<any>({
@@ -39,14 +31,10 @@ const ReOpener: React.FC = () => {
         horizontal: 0,
         vertical: 0,
         selectedP: '1',
-
     });
-    const [color, setColor] = useState({
-        hue: 300,
-        brightness: 1,
-        saturation: 0.7,
-        alpha: 0.7,
-    });
+    const [color, setColor] = useState({hue: 300,brightness: 1,saturation: 0.7,alpha: 0.7});
+    const selectedOption = dataText.selectedP ? options.find(option => option.value === dataText.selectedP) : null;
+    const selectedPostion = dataText.selectedP ? postion.find(option => option.value === dataText.selectedP) : null;
     const [hex, setHex] = useState<any>();
     const handleDrop = (files: File[]) => {
         const acceptedFiles = files.filter(file => ['image/png', 'image/jpeg'].includes(file.type) && file.size <= 1024 * 1024);
@@ -60,14 +48,10 @@ const ReOpener: React.FC = () => {
             setActive(true);
         }
     };
-
     const handleColor = (value: any) => {
         setColor(value);
         setHex(changeHexColor(color));
     }
-    const selectedOption = dataText.selectedP ? options.find(option => option.value === dataText.selectedP) : null;
-    const selectedPostion = dataText.selectedP ? postion.find(option => option.value === dataText.selectedP) : null;
-
     const toastMarkup = active ? (
         <Toast content="Please upload a PNG or JPEG file smaller than 1MB." onDismiss={() => setActive(!active)} />
     ) : null;
@@ -129,7 +113,8 @@ const ReOpener: React.FC = () => {
                                                 <div style={{ backgroundColor: '#F1F1F1', padding: '5px', display: 'flex', justifyContent: selectedPostion?.top, alignItems: selectedPostion?.left, height: '60px' }}>
                                                     <text style={{
                                                         padding: '6px',
-                                                        borderRadius: '4px',
+                                                        borderTopLeftRadius:'5px',
+                                                        borderTopRightRadius:'5px',
                                                         display: 'flex',
                                                         alignItems: 'center',
                                                         backgroundColor: dataText.colorBackGround,
