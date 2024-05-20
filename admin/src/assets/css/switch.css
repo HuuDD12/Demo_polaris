@@ -21,7 +21,7 @@
     background-color: #ccc;
     -webkit-transition: .4s;
     transition: .4s;
-    border-radius: 6px;
+    border-radius: 4px;
 }
 
 .slider:before {
@@ -34,16 +34,12 @@
     background-color: white;
     -webkit-transition: .4s;
     transition: .4s;
-    border-radius: 6px;
+    border-radius: 4px;
 
 }
 
 input:checked+.slider {
     background-color: #fcba16;
-}
-
-input:focus+.slider {
-    box-shadow: 0 0 1px #fcba16;
 }
 
 input:checked+.slider:before {

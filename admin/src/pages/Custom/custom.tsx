@@ -12,6 +12,7 @@ const Custom: React.FC = () =>{
       <Button url="/demo">Banner</Button>
       <Button variant="primary" url="/table">Table</Button>
       <Button  url="/re-opener">Re openner</Button>
+      <Button  url="#"></Button>
 
     </ButtonGroup>
         </Page>

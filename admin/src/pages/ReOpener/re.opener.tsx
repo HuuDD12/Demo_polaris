@@ -277,6 +277,7 @@ const ReOpener: React.FC = () => {
                                         label="Color (Hex) "
                                         value={hex ? hex : ''}
                                         autoComplete="off"
+                                        onChange={(value)=>setHex(value)}
                                     />
                                 </Box>
                             </InlineGrid>
